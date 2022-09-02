@@ -8,7 +8,64 @@
     <title>Simple Tailwind Starter</title>
   </head>
   <body>
-    <h1 class="text-4xl mb-4">Welcome</h1>
-    <p>Start building your Tailwind project</p>
+    <div class="row">
+      <label class="self-start block col-span-12 text-sm font-medium text-gray-700 row-span-0 sm:mt-px sm:pt-2">
+        รายการประเมินราคาอาคาร
+      </label>
+      <div class='justify-center block col-span-12'>
+        <table class='w-full table-fixed'> 
+          <thead class='w-full font-light border-t-4 bg-primary-50 text-primary-200 border-x-4 border-primary-700 hover:text-primary-500'>
+            <th class='font-medium border-b-2 border-x-2 border-primary-500'>ลำดับ</th>
+            <th class='font-medium border-b-2 border-x-2 border-primary-500'>รายการ</th>
+            <th class='font-medium border-b-2 border-x-2 border-primary-500'>เนื้อที่ (ตารางเมตร)</th>
+            <th class='font-medium border-b-2 border-x-2 border-primary-500'>ราคา/ตารางเมตร</th>
+            <th class='font-medium border-b-2 border-x-2 border-primary-500'>จำนวนเงิน</th>
+          </thead>
+          <tbody contentEditable oninput="main()">
+            <tr id="item1">
+              <td class='text-center' contenteditable="false">1</td>
+              <td class='text-left'>Bacon ipsum dolor amet landjaeger turducken pork loin</td>
+              <td class='text-right area'>1</td>
+              <td class='text-right pricePerArea'>1</td>
+              <td class='text-right subtotal' contentEditable="false" oninput="main()">100000</td>
+            </tr>
+            <tr>
+              <td class='text-center' contenteditable="false">2</td>
+              <td class='text-left'>Bacon ipsum dolor amet landjaeger turducken pork loin</td>
+              <td class='text-right area'>1</td>
+              <td class='text-right pricePerArea'>1</td>
+              <td class='text-right subtotal' contentEditable="false" oninput="main()">100000</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="flex flex-row justify-between">
+          <span>ราคาก่อนหักค่าเสื่อมและค่าไม่ทาสี</span> <span id="subtotal"></span>
+        </div>
+        </div>
+    </div>
+    <script>
+      const main = () => {
+        const unit1 = `th-TH`
+        const unit2 = { style: "currency", currency: "THB" }
+        const s = document.getElementsByClassName('subtotal')
+        const area = document.getElementsByClassName('area')
+        const pricePerArea = document.getElementsByClassName('pricePerArea')
+
+        var cf = 0
+        for (let item = 0; item < s.length; item++) {
+          var newArea = area[item].innerText.replace(/\D/g, "") || 1
+          var newPricePerArea = pricePerArea[item].innerText.replace(/\D/g, "") || 1
+          s[item].innerText = parseInt(newArea) * parseInt(newPricePerArea)
+          var newText = s[item].innerText.replace(/\D/g, "")
+          console.log(newText)
+          cf += parseInt(newText)
+          s[item].innerText = `${parseInt(newText).toLocaleString(unit1,unit2)}`
+          area[item].innerText = parseInt(newArea).toLocaleString()
+          pricePerArea[item].innerText = parseInt(newPricePerArea).toLocaleString()
+        }
+        document.getElementById('subtotal').innerText = `${cf.toLocaleString(unit1,unit2)}`
+      }
+      main()
+    </script>
   </body>
 </html>
