@@ -9,63 +9,45 @@
   </head>
   <body>
     <div class="row">
-      <label class="self-start block col-span-12 text-sm font-medium text-gray-700 row-span-0 sm:mt-px sm:pt-2">
-        รายการประเมินราคาอาคาร
+      <label class="self-start block col-span-12 text-sm font-medium text-gray-700 select-none row-span-0 sm:mt-px sm:pt-2" contenteditable>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae?
       </label>
       <div class='justify-center block col-span-12'>
         <table class='w-full table-fixed'> 
-          <thead class='w-full font-light border-t-4 bg-primary-50 text-primary-200 border-x-4 border-primary-700 hover:text-primary-500'>
-            <th class='font-medium border-b-2 border-x-2 border-primary-500'>ลำดับ</th>
-            <th class='font-medium border-b-2 border-x-2 border-primary-500'>รายการ</th>
-            <th class='font-medium border-b-2 border-x-2 border-primary-500'>เนื้อที่ (ตารางเมตร)</th>
-            <th class='font-medium border-b-2 border-x-2 border-primary-500'>ราคา/ตารางเมตร</th>
-            <th class='font-medium border-b-2 border-x-2 border-primary-500'>จำนวนเงิน</th>
+          <thead class='w-full font-light border-t-4 select-none bg-primary-50 text-primary-200 border-x-4 border-primary-700 hover:text-primary-500'>
+            <th class='font-medium border-b-2 select-none border-x-2 border-primary-500'>Order</th>
+            <th class='font-medium border-b-2 select-none border-x-2 border-primary-500'>Name</th>
+            <th class='font-medium border-b-2 select-none border-x-2 border-primary-500'>x</th>
+            <th class='font-medium border-b-2 select-none border-x-2 border-primary-500'>y</th>
+            <th class='font-medium border-b-2 select-none border-x-2 border-primary-500'>x+y</th>
+            <th class='font-medium border-b-2 select-none border-x-2 border-primary-500'>x-y</th>
+            <th class='font-medium border-b-2 select-none border-x-2 border-primary-500'>x/y</th>
+            <th class='font-medium border-b-2 select-none border-x-2 border-primary-500'>x*y</th>
           </thead>
-          <tbody contentEditable oninput="main()">
-            <tr id="item1">
-              <td class='text-center' contenteditable="false">1</td>
-              <td class='text-left'>Bacon ipsum dolor amet landjaeger turducken pork loin</td>
-              <td class='text-right area'>1</td>
-              <td class='text-right pricePerArea'>1</td>
-              <td class='text-right subtotal' contentEditable="false" oninput="main()">100000</td>
-            </tr>
-            <tr>
-              <td class='text-center' contenteditable="false">2</td>
-              <td class='text-left'>Bacon ipsum dolor amet landjaeger turducken pork loin</td>
-              <td class='text-right area'>1</td>
-              <td class='text-right pricePerArea'>1</td>
-              <td class='text-right subtotal' contentEditable="false" oninput="main()">100000</td>
-            </tr>
+          <tbody contentEditable oninput="main()" class="border-2 border-slate-400" id="mainTable">
           </tbody>
+          <tfoot class="bg-slate-400">
+            <tr class="border-4 border-black">
+              <td class='text-center border-2 border-black' contenteditable="false">Subtotal</td>
+              <td class='text-left border-2 border-black'></td>
+              <td class='text-center border-2 border-black' id="subtotalX"></td>
+              <td class='text-center border-2 border-black' id="subtotalY"></td>
+              <td class='text-center border-2 border-black' id="subtotalPlus"></td>
+              <td class='text-center border-2 border-black' id="subtotalMinus"></td>
+              <td class='text-center border-2 border-black' id="subtotalDivide"></td>
+              <td class='text-center border-2 border-black ' id="subtotal" contentEditable="false"></td>
+            </tr>
+          </tfoot>
         </table>
-        <div class="flex flex-row justify-between">
+        <!-- <div class="flex flex-row justify-between">
           <span>ราคาก่อนหักค่าเสื่อมและค่าไม่ทาสี</span> <span id="subtotal"></span>
-        </div>
-        </div>
+        </div> -->
+      </div>
+      <div class="flex flex-row justify-around mt-10 select-none">
+        <button class="bg-slate-300" onclick="addItem()">Add Item</button>
+        <button class="bg-slate-300" onclick="removeItem()">Remove Item</button>
+      </div>
     </div>
-    <script>
-      const main = () => {
-        const unit1 = `th-TH`
-        const unit2 = { style: "currency", currency: "THB" }
-        const s = document.getElementsByClassName('subtotal')
-        const area = document.getElementsByClassName('area')
-        const pricePerArea = document.getElementsByClassName('pricePerArea')
-
-        var cf = 0
-        for (let item = 0; item < s.length; item++) {
-          var newArea = area[item].innerText.replace(/\D/g, "") || 1
-          var newPricePerArea = pricePerArea[item].innerText.replace(/\D/g, "") || 1
-          s[item].innerText = parseInt(newArea) * parseInt(newPricePerArea)
-          var newText = s[item].innerText.replace(/\D/g, "")
-          console.log(newText)
-          cf += parseInt(newText)
-          s[item].innerText = `${parseInt(newText).toLocaleString(unit1,unit2)}`
-          area[item].innerText = parseInt(newArea).toLocaleString()
-          pricePerArea[item].innerText = parseInt(newPricePerArea).toLocaleString()
-        }
-        document.getElementById('subtotal').innerText = `${cf.toLocaleString(unit1,unit2)}`
-      }
-      main()
-    </script>
+    <script src="js/script.js"></script>
   </body>
 </html>
